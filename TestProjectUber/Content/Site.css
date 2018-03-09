@@ -1,0 +1,97 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    min-height: 90vh;
+    margin-top:50px;
+}
+
+footer{
+    min-height: 10vh;
+    text-align: center;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.table-hover tr:not(:first-child){
+    cursor:pointer;
+}
+
+#modalCourseEditor .form-control {
+    margin-bottom:10px;
+}
+
+.table-condensed thead > tr > th, .table-condensed tbody > tr > th, .table-condensed tfoot > tr > th, .table-condensed thead > tr > td, .table-condensed tbody > tr > td, .table-condensed tfoot > tr > td {
+    padding: 2px 0;
+    width: 30px;
+    text-align:center;
+}
+
+.calendar-cell{
+    position:relative;
+}
+
+.occupied-cell{
+    background-color:lightgrey;
+}
+
+#tblCalendarModal .calendar-cell {
+    cursor:pointer;
+}
+
+#tblCalendarModal .occupied-cell{
+    cursor:default;
+}
+
+#tooltip{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:115%;
+    border:1px solid burlywood;
+    border-radius:5px;
+    padding:5px 10px;
+    background-color:wheat;
+    z-index:100;
+}
+
+.bg-green{
+    background-color:darkseagreen;
+}
+
+.selectedTimesJson{
+    visibility:hidden;
+    height:0;
+    padding:0;
+    margin:0;
+}
+
+.field-validation-error span{
+    color:darkred;
+    font-weight:bold;
+    border-radius:5px;
+    background-color:bisque;
+    padding:5px;
+}
+
+.field-validation-error {
+    margin-bottom: 10px;
+    display: inline-block;
+}

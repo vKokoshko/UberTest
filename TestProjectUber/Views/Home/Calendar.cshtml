@@ -1,0 +1,23 @@
+﻿
+<table class="table table-bordered table-responsive table-condensed calendar" id="@ViewBag.CalendarId">
+
+    <tr>
+        <td></td>
+        @foreach (string day in ViewBag.CalendarDays)
+        {
+            <td>@day</td>
+        }
+    </tr>
+
+    @foreach (Tuple<string,string> hour in ViewBag.CalendarHours)
+    {
+        <tr>
+            <td>@hour.Item1</td>
+            @foreach (string day in ViewBag.CalendarDays)
+            {
+                <td class="@day-@hour.Item2 calendar-cell"></td>
+            }
+        </tr>
+    }
+
+</table>

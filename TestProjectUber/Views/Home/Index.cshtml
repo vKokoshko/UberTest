@@ -1,0 +1,91 @@
+﻿@model TestProjectUber.Models.HomeIndexViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    @Html.ValidationSummary(false, ViewBag.ValidationTitle as string, new { @class = "validation-summary" })
+</div>
+<div class="row">
+    <div class="col-md-4 push-md-8 hidden-xs">
+        <h2>Schedule</h2>
+        @{ ViewBag.CalendarId = "tblCalendar"; }
+        @Html.Partial("Calendar")
+    </div>
+    <div class="col-md-8 pull-md-4">
+        <h2>Courses list</h2>
+        <table class="table table-bordered table-responsive table-hover">
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Schedule</th>
+            </tr>
+            @foreach (var course in Model.Courses)
+            {
+            <tr class="listItemCourse" tag="@course.Name" id="@course.Id" value="@course.Value.Substring(1,course.Value.Length-1)">
+                <td>@course.Name</td>
+                <td>@course.Value</td>
+                <td>
+                    <div class="container-fluid">
+                        <div class="row">
+                            @foreach (var day in course.Schedule)
+                            {
+                                <div class="col-sm-3">@day.Key</div>
+                                <div class="col-sm-9">@day.Value</div>
+                            }
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            }
+        </table>
+        <p><div class="btn btn-default" id="btnAddCourse">Add Course</div></p>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalCourseEditor" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AddOrUpdateCourse", "Home", FormMethod.Post, new { @id = "formAddOrUpdateCourse" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.CourseId)
+                    @Html.EditorFor(m => m.CourseName, new { htmlAttributes = new { @class = "form-control", placeholder = "Course Name" } })
+                    @Html.ValidationMessageFor(model => model.CourseName)
+                    @Html.EditorFor(m => m.CourseValue, new { htmlAttributes = new { @class = "form-control", placeholder = "Course Name" } })
+                    @Html.ValidationMessageFor(model => model.CourseValue)
+                    <h4>Choose time</h4>
+                    ViewBag.CalendarId = "tblCalendarModal";
+                    @Html.Partial("Calendar")
+                    @Html.ValidationMessageFor(model => model.SelectedTimesJson)
+                    @Html.EditorFor(m => m.SelectedTimesJson, new { htmlAttributes = new { @class = "selectedTimesJson" } })
+                }
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" form="formAddOrUpdateCourse" value="Save">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger hidden" id="btnDeleteCourse">Delete Course</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Tooltip -->
+
+<div id="tooltip" class="hidden"></div>
+
+@section Scripts {
+    <script>
+        var modelCalendarEntriesJson = '@Model.CalendarEntriesJson';
+    </script>
+    @Scripts.Render("~/bundles/home")
+}
